@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SuperHeroAPI.Dtos.SuperHero;
 using SuperHeroAPI.Models;
 using SuperHeroAPI.Services.SuperHeroService;
+using System.Data;
 
 namespace SuperHeroAPI.Controllers
 {
@@ -37,7 +39,7 @@ _context = context;
             return Ok(await _superHeroService.GetHero(id));
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(Roles = "admin")]
         public async Task<ActionResult<ServiceResponse<List<GetSuperHeroDto>>>> GetHeroes() 
         {
             /*return Ok(await _context.SuperHeroes.ToListAsync());*/
